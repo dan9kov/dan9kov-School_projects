@@ -11,3 +11,5 @@ sm = 0
 for i in arr:
     sm += i
 print(sm)
+
+#276
