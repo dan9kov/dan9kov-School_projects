@@ -25,21 +25,40 @@ ll time_revers(string t) {
 }
 
 void time_revers(ll t) {
-    cout << t / 60 << ":" << t % 60;
+    if (t / 60 < 10) {
+        cout << 0;
+    }
+    cout << t / 60 << ":";
+    if (t % 60) {
+        cout << 0;
+    }
+    cout << t % 60;
 }
 
 int main()
 {
-    ll speed, break_time, n, dist, sm_time;
+    ll speed, break_time, n, dist, sm_time = 0, time, global_dist = 0;
     string str;
     cin >> speed >> break_time >> n;
     for (ll i = 0; i < n; ++i) {
         cin >> dist >> str;
-        cout << int(str[0]) << "\n" << int(str[1]) << "\n";
-        cout << time_revers(str) << "\n";
-        time_revers(time_revers(str));
-        cout << "\n";
+        
+        time = (dist - global_dist) / speed;
+        if ((dist - global_dist) % speed != 0) {
+            ++time;
+        }
+        global_dist += dist;
+        time = max(time, time_revers(str));
+        sm_time += time + break_time;
+        // cout << time_revers(str) << "\n";
+        // time_revers(time_revers(str));
+        // cout << "\n";
     }
+    ll go_back = global_dist / speed;
+    if (global_dist % speed != 0) {
+        ++go_back;
+    }
+    time_revers(sm_time + go_back);
 
     return 0;
 }
