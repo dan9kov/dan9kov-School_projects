@@ -7,20 +7,16 @@ ll max_ = 1e15;
 // ld tochnost = 0.0000000000000001;
 ld tochnost = 1e-12;
 
-bool f(ld mid, ld a, ll n) {
-    ld cnt = mid;
-    for (ll i = 0; i < n - 1; ++i) {
-        cnt *= mid;
-    }
-    return cnt > a;
+bool f(ld mid, ll a, ll b, ll c, ll d) {
+    return a * mid * mid * mid + b * mid * mid + c * mid + d > 0;
 }
 
-ld bin_search(ld a, ll n) {
-    ld l = -max_, r = max_;
+ld bin_search_plus(ll a, ll b, ll c, ll d) {
+    ld l = 0, r = max_;
     ld mid = (l + r) / 2;
     while (r - l > tochnost) {
         mid = (l + r) / 2;
-        if (f(mid, a, n)) {
+        if (f(mid, a, b, c, d)) {
             r = mid;
         } else {
             l = mid;
@@ -29,12 +25,30 @@ ld bin_search(ld a, ll n) {
     return l;
 }
 
+ld bin_search_minus(ll a, ll b, ll c, ll d) {
+    ld l = -max_, r = 0;
+    ld mid = (l + r) / 2;
+    while (r - l > tochnost) {
+        mid = (l + r) / 2;
+        if (f(mid, a, b, c, d)) {
+            r = mid;
+        } else {
+            l = mid;
+        }
+    }
+    return l;
+}
+
+
 int main()
 {
-    ll n;
-    ld a;
-    cin >> a >> n;
-    cout << setprecision(10);
-    cout << bin_search(a, n);
+    ll a, b, c, d;
+    cin >> a >> b >> c >> d;
+    if (d == 0) {
+        cout << 0;
+    } else {
+        cout << bin_search_plus(a, b, c, d) << " " << ;
+    }
+    
     return 0;
 }
